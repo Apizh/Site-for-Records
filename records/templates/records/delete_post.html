@@ -1,0 +1,9 @@
+<h3>Вы уверены, что хотите удалить этот пост?</h3>
+<p>Заголовок: {{ post.title }}</p>
+<p>Содержание: {{ post.content }}</p>
+
+<form method="POST">
+    {% csrf_token %}
+    <button type="submit" class="btn btn-danger">Удалить</button>
+</form>
+<a href="#">Отмена</a>

@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+
+{% block breadcrumbs %}
+<!-- Теги -->
+{% with post.tags.all as tags %}
+{% if tags %}
+<ul class="tags-list">
+    <li><h2>Связанные темы:</h2></li>
+    {% for t in tags %}
+    <li><a href="{{ t.get_absolute_url }}">{{ t.tag }}</a></li>
+    {% endfor %}
+    <li class="rating">
+        <span class="rating-circle">{{ post.rating }}</span>
+    </li>
+</ul>
+
+{% endif %}
+{% endwith %}
+{% endblock %}
+
+{% block content %}
+<h1>{{post.title}}</h1>
+
+{% if post.photo %}
+<p><img class="img-article-left" src="{{post.photo.url}}"></p>
+{% endif %}
+
+{{post.content|linebreaks}}
+
+<div id="action-buttons">
+    <!-- Ссылка для редактирования поста -->
+    <a href="{% url 'update_post' post.slug %}" class="btn">Изменить</a>
+
+    <!-- Форма для изменения флага -->
+    <form method="post" action="{% url 'toggle_flag' slug=post.slug %}">
+        {% csrf_token %}
+        <button type="submit" class="btn">
+            {% if post.is_published %}В корзину
+            {% else %}Убрать из корзины
+            {% endif %}
+        </button>
+
+    </form>
+</div>
+{% endblock %}

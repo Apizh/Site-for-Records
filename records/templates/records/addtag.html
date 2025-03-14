@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ title_page }}</h1>
+<form action="" method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="form-error">{{ form.non_field_errors }}</div>
+    {% for f in form %}
+    <p><label class="form-label" for="{{ f.id_for_label }}">Введите название темы</label>{{ f }}</p>
+    <div class="form-error">{{ f.errors }}</div>
+    {% endfor %}
+    <p>
+        <button type="submit">Сохранить</button>
+    </p>
+</form>
+
+<h3>Список тем:</h3>
+<ul>
+    {% for tagpost in data %}
+    <li class="category-item">
+        <span class="category-name">{{ tagpost.tag }}</span>
+        <a href="{% url 'edittag' tagpost.slug %}" class="btn btn-warning">Редактировать</a>
+        <form action="{% url 'deletetag' tagpost.slug %}" method="post" style="display:inline;">
+            {% csrf_token %}
+            <button type="submit" class="btn btn-danger">Удалить</button>
+        </form>
+    </li>
+    {% empty %}
+    <li>Вы еще не добавили ни одной категории.</li>
+    {% endfor %}
+</ul>
+
+{% endblock %}

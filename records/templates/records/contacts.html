@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Контактная информация</h2>
+<ul style="list-style-type: none;">
+    <li><strong>Номер телефона:</strong> {{ phone_number }}</li>
+    <li><strong>Email:</strong> {{ email }}</li>
+    <li><strong>Адрес:</strong> {{ address }}</li>
+</ul>
+{% endblock %}
